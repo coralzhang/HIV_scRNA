@@ -161,3 +161,16 @@ Threshold.fun2=function(xx,kkt,seed=NULL,muv.init=NULL,xaxis.text="xx",saving=FA
     return(list(threshold=tmp1v,means=muv1,sds=sdv1,likelihood=mixmdl1$loglik,BIC=BIC, xxemp.v=xxemp.v,lmdv1=lmdv1)) ## the lmdv1 is added on Dec 21
 }
 
+
+remove.iqr=function(xx,nn=1.5,xaxis.text=""){
+    Q <- quantile(xx, probs=c(.25, .75), na.rm = FALSE)
+    iqr=IQR(xx)
+    up <-  Q[2]+nn*iqr # Upper Range  
+    low<- Q[1]-nn*iqr # Lower Range
+    out=c(low,up)
+    par(mfrow=c(1,1))
+    hist(xx,nclass=100,freq=FALSE,xlab=xaxis.text,main="")
+    abline(v=up,lty=2,col=2,lwd=2)
+    return(as.vector(out))
+}
+
